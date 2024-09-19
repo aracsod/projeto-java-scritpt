@@ -53,7 +53,6 @@ function points() {
     ctx.fillText(p1_points, w / 4, 50)
     ctx.fillText(p2_points, 3* (w / 4), 50)
 }
-
 function draw() {
     el(0, 0, w, h, "#000"); //Background
     el(p1_x, p1_Y, pw, ph, "#ff0000") //Barra 1
