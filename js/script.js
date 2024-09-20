@@ -1,6 +1,6 @@
 let ctx, p1_y, p2_y, p1_points, p2_points;
 let w = 1280, h = 720, pw = 20, ph = 100, p1_x = 7, p2_x = w - pw - 7; 
-let p1_kay = null, p2_key = null;
+let p1_key = null, p2_key = null;
 let ballX, ballY, ballX_ori, ballY_ori; 
 let gameStarted = false;
 let acceleration = 0.2
@@ -8,18 +8,19 @@ let ballSpeedX = 5; // Velocidade inicial da bola ao longo do eixo X
 let ballSpeedY = 5; // Velocidade inicial da bola aolongodo eixo Y 
 
 function init() {
-    let c = document.getElementById("canva")
+    let c = document.getElementById("canva");
     ctx = c.getContext("2d"); 
 
-    p1_Y = (h / 2 - 50)
+    p1_y = (h / 2 - 50)
     p2_y = (h / 2 - 50)
     
     p1_points = 0 
     p2_points = 0
 
-    draxStartScreen();
-     document.addEventListener(kaydown, function screen (event) {
-        if (event.kaycode === 32 && !gameStarted) {
+    drawStartScreen();
+
+     document.addEventListener("keydown", function screen (event) {
+        if (event.keyCode === 32 && !gameStarted) {
             gameStarted = true;
             setInterval(fps, 1000 / 60); // definindio quantos quadros, em média 16,6 ms
         }
@@ -28,6 +29,7 @@ function init() {
      console.log (`${p1_points}`)
      ball()
 }
+
 function el(x, y, w, h, color) { /// definindo os parametros para o draw()
     ctx.fillStyle = color; 
     if (w === h) {
@@ -41,7 +43,7 @@ function el(x, y, w, h, color) { /// definindo os parametros para o draw()
     }
 }
 
-function drawStarScreen() {
+function drawStartScreen() {
     el(0, 0, w, h, "#000"); //Backgraund
     ctx.font = "40px arial";
     ctx.fillStyle = "#fff";
@@ -55,33 +57,34 @@ function points() {
 }
 function draw() {
     el(0, 0, w, h, "#000"); //Background
-    el(p1_x, p1_Y, pw, ph, "#ff0000") //Barra 1
-    el(p1_x, p1_Y, pw, ph, "#0000ff") //Barra 2
+    el(p1_x, p1_y, pw, ph, "#ff0000") //Barra 1
+    el(p1_x, p1_y, pw, ph, "#0000ff") //Barra 2
     el(w / 2 -5, 0, 5, h, "#ff0000")  //Linha
     el(w / 2 -5, 0, 5, h, "#0000ff")  //Linha
     el(h / 2 - 5)
     el(ballX, ballY, 20, 20, "#fff")  //Bola 
-    points();                         //Pontos
+    points(); //Pontos
 }
 
 function ball() {
     ballX_ori = Math.pow(2, Math.floor(Math.random() * 2) + 1) - 3
     ballY_ori = Math.pow(2, Math.floor(Math.random() * 2) + 1) - 3
     ballX = w / 2 - 10
-    ballY = w / 2 - 10
+    ballY = h / 2 - 10
 }
 
 function fps() {
-    if  (p1_key == 87 && p1_Y > 0) {
-        p1_Y -= 10 //Calcula pra cima 
-    } else if (p1_key == 83 && p1_Y + ph < h) {
+
+    if (p1_key == 87 && p1_y > 0) {
+        p1_y -= 10 //Calcula pra cima 
+    } else if (p1_key == 83 && p1_y + ph < h) {
         p1_y += 10 //Calcula pra baixo 
     }
 
-    if  (p2_key == 104 && p2_Y > 0) {
-        p1_Y -= 10 //Calcula pra cima 
-    } else if (p1_key == 101 && p1_Y + ph < h) {
-        p1_y += 10 //Calcula pra baixo 
+    if  (p2_key == 104 && p2_y > 0) {
+        p2_y -= 10 //Calcula pra cima 
+    } else if (p2_key == 101 && p2_y + ph < h) {
+        p2_y += 10 //Calcula pra baixo 
     }
 
     
@@ -152,34 +155,34 @@ let p1_movementDirection = 0;
 let p2_movementDirection = 0;
 
 document.addEventListener("keydown", function (ky) {
-    if (ky.keycode == 87) {
-        p1_key = ky.keycode; //W
+    if (ky.keyCode == 87) {
+        p1_key = ky.keyCode; //W
         p1_movementDirection = -1; //Define a direção para cima 
-    } else if (ky.keycode == 83) {
-        p1_key = ky.keycode; //s
+    } else if (ky.keyCode == 83) {
+        p1_key = ky.keyCode; //s
         p1_movementDirection = 1; //Define a direção para baixo 
     }
 });
 
 document.addEventListener("keyup", function (ky) {
-    if (ky.keycode == p1_key) {
+    if (ky.keyCode == p1_key) {
         p1_key = null; //Limpa a tecla precionada 
         p1_movementDirection = 0; //Define a direção como zero para parar o movimento
     }
 });
 
 document.addEventListener("keydown", function (ky) {
-    if (ky.keycode == 104) {
-        p2_key = ky.keycode; //W
+    if (ky.keyCode == 104) {
+        p2_key = ky.keyCode; //W
         p2_movementDirection = -1; //Define a direção para cima 
-    } else if (ky.keycode == 101) {
-        p2_key = ky.keycode; //S
+    } else if (ky.keyCode == 101) {
+        p2_key = ky.keyCode; //S
         p2_movementDirection = 1; //Define a direção para baixo 
     }
 });
 
 document.addEventListener("keyup", function (ky) {
-    if (ky.keyCode == p2_kay) {
+    if (ky.keyCode == p2_key) {
         p2_key = null; //Limpa a tecla precionada 
         p2_movementDirection = 0; //Define a direção como zero para parar o movimento
     }
