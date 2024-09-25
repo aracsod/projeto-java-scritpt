@@ -148,7 +148,7 @@ function fps() {
         ball()
     } 
 
-    draw ()
+    draw()
 }
 
 let p1_movementDirection = 0;
