@@ -188,4 +188,4 @@ document.addEventListener("keyup", function (ky) {
     }
 });
 
-document.addEventListener(DOMContentLoaded, init);  
+document.addEventListener("DOMContentLoaded", init);  
