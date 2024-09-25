@@ -47,7 +47,7 @@ function drawStartScreen() {
     el(0, 0, w, h, "#000"); //Backgraund
     ctx.font = "40px arial";
     ctx.fillStyle = "#fff";
-    ctx.fillText("pressione a barra de espaço para começar, w / 3 - 50, h / 2");
+    ctx.fillText("pressione a barra de espaço para começar", w / 3 - 50, h / 2);
 }
 function points() {
     ctx.font = "50px Arial"
@@ -58,9 +58,9 @@ function points() {
 function draw() {
     el(0, 0, w, h, "#000"); //Background
     el(p1_x, p1_y, pw, ph, "#ff0000") //Barra 1
-    el(p1_x, p1_y, pw, ph, "#0000ff") //Barra 2
+    el(p2_x, p2_y, pw, ph, "#0000ff") //Barra 2
     el(w / 2 -5, 0, 5, h, "#ff0000")  //Linha
-    el(w / 2 -5, 0, 5, h, "#0000ff")  //Linha
+    el(w / 2 +5, 0, 5, h, "#0000ff")  //Linha
     el(h / 2 - 5)
     el(ballX, ballY, 20, 20, "#fff")  //Bola 
     points(); //Pontos
@@ -103,13 +103,13 @@ function fps() {
     if (ballX + 10 >= p1_x && ballX <= p1_x + pw && ballY + 10 >= p1_y && ballY <= p1_y + ph) {
         ballX_ori = 1; 
         ballSpeedX += ballSpeedX > 0 ? acceleration : -acceleration;
-        ballSpeedY += p2_movementDirection * acceleration * 0,2; // Ajuste o fator do multiplicador conforme o necessário 
+        ballSpeedY += p2_movementDirection * acceleration * 0.2; // Ajuste o fator do multiplicador conforme o necessário 
     }
     
     if (ballX + 10 >= p2_x && ballX <= p2_x + pw && ballY + 10 >= p2_y && ballY <= p2_y + ph) {
         ballX_ori = -1; 
         ballSpeedX += ballSpeedX > 0 ? acceleration : -acceleration;
-        ballSpeedY += p2_movementDirection * acceleration * 0,2; // Ajuste o fator do multiplicador conforme o necessário 
+        ballSpeedY += p2_movementDirection * acceleration * 0.2; // Ajuste o fator do multiplicador conforme o necessário 
     }
 
     if (!gameStarted) {
@@ -125,7 +125,7 @@ function fps() {
 
     //Colisão do teto e chão    
 
-    if (ballY + 10 >= h || ballY <= 0) ballX_ori *= -1
+    if (ballY + 10 >= h || ballY <= 0) ballY_ori *= -1
 
     
     //Velocidade aplicada na saida
@@ -146,7 +146,10 @@ function fps() {
     if (ballX + 10 > w) {
         p1_points++
         ball()
-    } 
+    } else if (ballX < 0) {
+        p2_points++
+        ball()
+    }
 
     draw()
 }
